@@ -100,6 +100,30 @@ Generating a randomly ordered polypeptide
 Resulting String-of-Beads:  ALGENSEVV-MW-YLAHAIHQV-MWYWNY-KIPEQSVLL-MNW-RIIGMRTQL
 ```
 
+You can convert these output into a TSV file to help faciliate downstream 
+analyses:
+
+```bash
+bin/format_optivac_output.R \
+    --optivac-output-file example/out.txt \
+    --output-file example/out.tsv
+```
+
+This would produce a `example/out.tsv` with content like (has been formatted
+using `csvlook -t -I example/out.tsv`:
+
+```
+| peptide_seq | label |
+| ----------- | ----- |
+| ALGENSEVV   | e1    |
+| MW          | s1,s2 |
+| YLAHAIHQV   | e2    |
+| MWYWNY      | s2,s3 |
+| KIPEQSVLL   | e3    |
+| MNW         | s3,s4 |
+| RIIGMRTQL   | e4    |
+```
+
 Citation
 -------
 
