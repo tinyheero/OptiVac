@@ -8,6 +8,20 @@ License: This software is under a three-clause BSD license
 
 Introduction:
 -------------
+
+This is a fork of the original OptiVac git repository
+(https://github.com/FRED-2/OptiVac). The original repository no longer appears
+to be under active development. As such, novel features have been added to this
+repository. This includes:
+
+* `bin/format_optivac_output.R` formatting script to convert output into a
+    nice tabular form
+* `--order-type` argument that allows for optimal (as per the paper), random,
+    or fixed ordering. The random ordering options allow users to create a
+    random order of peptides in the string-of-breads, but still use the optimal
+    spacers. Similarily for the fixed option, the order of the epitopes in the
+    `--input` file is perserved, but optimal spacers are used.
+
 The software is a novel approach to construct epitope-based string-of-beads
 vaccines in optimal order and with sequence-optimized spacers of flexible length
 such that the recovery of contained epitopes is maximized and immunogenicity of 
@@ -76,10 +90,15 @@ Arguments:
                         Specifies number of threads. If not specified all
                         available logical cpus are used.
 ```
+
 Example
 ------
-```
-python OptiVac.py -i example/epitope_list.csv -a example/allele_probabilities_europe.csv -o example/out.txt
+
+```bash
+python OptiVac.py \
+        -i example/epitope_list.csv \
+        -a example/allele_probabilities_europe.csv \
+        -o example/out.txt
 ```
 
 To create a randomly ordered string-of-beads polypeptide with optimal spacer
@@ -92,7 +111,7 @@ python OptiVac.py \
     -o example/out.txt \
     --ips-solver cbc \
     --tsp-solution optimal \
-    --random-order
+    --order-type random
 ```
 ```
 Generating a randomly ordered polypeptide
