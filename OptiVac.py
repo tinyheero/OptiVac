@@ -167,9 +167,19 @@ arising neo-epitopes is reduced. """)
                         choices=["approximate", "optimal"],
                         help="Type of solution of the TSP")
 
-    parser.add_argument("--random-order",
-                        action="store_true",
-                        help="Indicate whether to generate a random ordered string-of-beads polypeptide")
+    parser.add_argument("--order-type",
+                        choices=["optimal", "random", "fixed"],
+                        default="optimal",
+                        help="Indicate whether to generate a string-of-beads"
+                        + " polypeptide that is of optimal, random, or fixed"
+                        + " order. If optimal is specified, then the"
+                        + " string-of-beads will be generated as per the"
+                        + " method in the paper with optimal order/spacers."
+                        + " If random is specified, then the order of"
+                        + " peptides is random, but the optimal spacers will"
+                        + " used. If fixed is specified, then the order of"
+                        + " peptides will match the order in the --input file"
+                        + " but optimal spacers will be used")
 
     parser.add_argument("--seed",
                         type=int,
@@ -212,18 +222,22 @@ arising neo-epitopes is reduced. """)
     else:
         svbws = solver.solve(threads=threads,options={"preprocessing_presolve":"n","threads":1})
 
-    # Generate random ordered string-of-breads, but still uses optimal spacers
+    # Generate random or fixed ordered string-of-breads, but still uses optimal spacers
     # determined from the above solve function.
-    if args.random_order:
-        print "Generating a randomly ordered polypeptide"
-        random.seed(args.seed)
-        random_order_sob = []
-        random.shuffle(peptides)
+    if args.order_type in ["random", "fixed"]:
+        if args.order_type == "random":
+            print "Generating a randomly ordered polypeptide"
+            random.seed(args.seed)
+            random.shuffle(peptides)
+        else:
+            print "Generating a fixed ordered polypeptide"
+
+        order_sob = []
         for i in range(len(peptides)):
 
             # Break from loop once we hit the last peptide
             if i == len(peptides) - 1:
-                random_order_sob.extend([Peptide(str(peptides[i]))])
+                order_sob.extend([Peptide(str(peptides[i]))])
                 break
 
             left_peptide = str(peptides[i])
@@ -231,12 +245,12 @@ arising neo-epitopes is reduced. """)
             opt_spacer = solver.spacer[(left_peptide, right_peptide)]
 
             # Right peptide gets added in the next iteration
-            random_order_sob.extend([
+            order_sob.extend([
                 Peptide(left_peptide),
                 Peptide(opt_spacer)
             ])
 
-        svbws = random_order_sob
+        svbws = order_sob
 
     print
     print "Resulting String-of-Beads: ","-".join(map(str,svbws))
