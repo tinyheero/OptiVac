@@ -231,6 +231,9 @@ arising neo-epitopes is reduced. """)
             random.shuffle(peptides)
         else:
             print "Generating a fixed ordered polypeptide"
+            # peptides are added to the front of the list. So basically the
+            # original order can be retrieve by reversing this list.
+            peptides.reverse()
 
         order_sob = []
         for i in range(len(peptides)):
