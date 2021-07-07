@@ -15,12 +15,17 @@ to be under active development. As such, novel features have been added to this
 repository. This includes:
 
 * `bin/format_optivac_output.R` formatting script to convert output into a
-    nice tabular form
+    nice tabular form:
+    + The changes can be found in the `feature/add-formatting-script` branch.
 * `--order-type` argument that allows for optimal (as per the paper), random,
     or fixed ordering. The random ordering options allow users to create a
     random order of peptides in the string-of-breads, but still use the optimal
     spacers. Similarily for the fixed option, the order of the epitopes in the
     `--input` file is perserved, but optimal spacers are used.
+    + The changes can be found in the `feature/add-fixed-order` branch.
+
+**The individual feature branches will remain in case there is an opportunity
+in the future to merge these changes back to the original OptiVac repository.**
 
 The software is a novel approach to construct epitope-based string-of-beads
 vaccines in optimal order and with sequence-optimized spacers of flexible length
@@ -42,23 +47,28 @@ and their dependencies.
 
 Installation:
 -------------
+
 First install all required software and libraries. CPLEX/LKH should be globally executable
 via command line. 
 
 
 Usage:
 -------------
-```
+
+```bash
 usage: OptiVac.py [-h] -i INPUT -a ALLELES [-k MAX_LENGTH] [-al ALPHA]
-                   [-be BETA] [-cp CLEAVAGE_PREDICTION]
-                   [-ep EPITOPE_PREDICTION] [-thr THRESHOLD] -o OUTPUT
-                   [-t THREADS]
+                  [-be BETA] [-cp CLEAVAGE_PREDICTION]
+                  [-ep EPITOPE_PREDICTION] [-thr THRESHOLD] -o OUTPUT
+                  [-t THREADS] [--ips-solver {cplex,cbc}]
+                  [--tsp-solution {approximate,optimal}]
+                  [--order-type {optimal,random,fixed}] [--seed SEED]
 ```
 
 The software is a novel approach to construct epitope-based string-of-beads
 vaccines in optimal order and with sequence-optimized spacers of flexible
 length such that the recovery of contained epitopes is maximized and
 immunogenicity of arising neo-epitopes is reduced.
+
 ```
 Arguments:
   -h, --help            show this help message and exit
@@ -77,10 +87,11 @@ Arguments:
                         the model [0,1] (default 0).
   -cp CLEAVAGE_PREDICTION, --cleavage_prediction CLEAVAGE_PREDICTION
                         Specifies the used cleavage prediction method (default
-                        PCM) [available: PCM, ProteaSMMConsecutive, ProteaSMMImmuno]
+                        PCM) [available: PCM, PROTEASMM_C, PROTEASMM_S]
   -ep EPITOPE_PREDICTION, --epitope_prediction EPITOPE_PREDICTION
                         Specifies the used epitope prediction method (default
-                        Syfpeithi) [available: Syfpeithi, BIMAS, SMM, SMMPMBEC]
+                        Syfpeithi) [available: Syfpeithi, BIMAS, SMM,
+                        SMMPMBEC]
   -thr THRESHOLD, --threshold THRESHOLD
                         Specifies epitope prediction threshold for SYFPEITHI
                         (default 20).
@@ -89,6 +100,23 @@ Arguments:
   -t THREADS, --threads THREADS
                         Specifies number of threads. If not specified all
                         available logical cpus are used.
+  --ips-solver {cplex,cbc}
+                        Executable name of the IPS solver. Executable needs to
+                        be available in PATH.
+  --tsp-solution {approximate,optimal}
+                        Type of solution of the TSP
+  --order-type {optimal,random,fixed}
+                        Indicate whether to generate a string-of-beads
+                        polypeptide that is of optimal, random, or fixed
+                        order. If optimal is specified, then the string-of-
+                        beads will be generated as per the method in the paper
+                        with optimal order/spacers. If random is specified,
+                        then the order of peptides is random, but the optimal
+                        spacers will used. If fixed is specified, then the
+                        order of peptides will match the order in the --input
+                        file but optimal spacers will be used
+  --seed SEED           Seed for random ordering of string-of-beads
+                        polypeptide
 ```
 
 Example
