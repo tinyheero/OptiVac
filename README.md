@@ -22,7 +22,8 @@ repository. This includes:
     random order of peptides in the string-of-breads, but still use the optimal
     spacers. Similarily for the fixed option, the order of the epitopes in the
     `--input` file is perserved, but optimal spacers are used.
-    + The changes can be found in the `feature/add-fixed-order` branch.
+    + The changes can be found in the `feature/add-fixed-order` and 
+        `bugfix/fixed-order` branches.
 
 **The individual feature branches will remain in case there is an opportunity
 in the future to merge these changes back to the original OptiVac repository.**
