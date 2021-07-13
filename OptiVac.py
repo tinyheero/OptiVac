@@ -191,7 +191,7 @@ arising neo-epitopes is reduced. """)
     # Load the peptide data.
     #
     # Previously, the loading of these data was done using the
-    # `FileReader.read_lines() method`. But this uses a set to store the
+    # `FileReader.read_lines()` method. But this uses a set to store the
     # peptide data and this doesn't preserve the order the peptide data is
     # loaded (i.e. added to the set). The order is important for the
     # `--order-type fixed` option to work properly.
