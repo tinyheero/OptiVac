@@ -1,14 +1,3 @@
-#OptiVac - Designing String-of-beads with optimal spacers
-
-Authors: Benjamin Schubert and Oliver Kohlbacher   
-Date: June 2015   
-Version: 1.1  
-License: This software is under a three-clause BSD license  
-
-
-Introduction:
--------------
-
 This is a fork of the original OptiVac git repository
 (https://github.com/FRED-2/OptiVac). The original repository no longer appears
 to be under active development. As such, novel features have been added to this
@@ -22,11 +11,23 @@ repository. This includes:
     random order of peptides in the string-of-breads, but still use the optimal
     spacers. Similarily for the fixed option, the order of the epitopes in the
     `--input` file is perserved, but optimal spacers are used.
-    + The changes can be found in the `feature/add-fixed-order` and 
-        `bugfix/fixed-order` branches.
+    + The changes can be found in the `feature/add-fixed-order`, 
+        `bugfix/fixed-order`, and `bugfix/fixed-order-2` branches.
 
 **The individual feature branches will remain in case there is an opportunity
 in the future to merge these changes back to the original OptiVac repository.**
+
+# OptiVac - Designing String-of-beads with optimal spacers
+
+Authors: Benjamin Schubert and Oliver Kohlbacher   
+Date: June 2015   
+Version: 1.1  
+License: This software is under a three-clause BSD license  
+
+
+Introduction:
+-------------
+
 
 The software is a novel approach to construct epitope-based string-of-beads
 vaccines in optimal order and with sequence-optimized spacers of flexible length
