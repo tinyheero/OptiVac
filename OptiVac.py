@@ -188,8 +188,21 @@ arising neo-epitopes is reduced. """)
 
     args = parser.parse_args()
 
-    #parse input
-    peptides = list(FileReader.read_lines(args.input, in_type=Peptide))
+    # Load the peptide data.
+    #
+    # Previously, the loading of these data was done using the
+    # `FileReader.read_lines() method`. But this uses a set to store the
+    # peptide data and this doesn't preserve the order the peptide data is
+    # loaded (i.e. added to the set). The order is important for the
+    # `--order-type fixed` option to work properly.
+    #
+    # This alternative implementation uses a list to store the data, which
+    # preserves the order that the peptide data is loaded.
+    peptides = []
+    with open(args.input, "r") as f:
+        for line in f:
+            peptides.append(Peptide(line.rstrip().upper()))
+
     #read in alleles
     alleles = generate_alleles(args.alleles)
 
@@ -231,9 +244,6 @@ arising neo-epitopes is reduced. """)
             random.shuffle(peptides)
         else:
             print "Generating a fixed ordered polypeptide"
-            # peptides are added to the front of the list. So basically the
-            # original order can be retrieve by reversing this list.
-            peptides.reverse()
 
         order_sob = []
         for i in range(len(peptides)):
@@ -254,6 +264,8 @@ arising neo-epitopes is reduced. """)
             ])
 
         svbws = order_sob
+    else:
+        print "Generating an optimally ordered polypeptide"
 
     print
     print "Resulting String-of-Beads: ","-".join(map(str,svbws))
